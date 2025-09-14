@@ -1,12 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -14,7 +15,7 @@ export function Navbar() {
     { name: "Our Projects", href: "#projects" },
     { name: "Our Services", href: "#services" },
     { name: "Contact Us", href: "#contact" },
-  ]
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -23,10 +24,16 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">S</span>
-              </div>
-              <span className="font-bold text-xl text-foreground">Sevvel Shelters</span>
+              <Image
+                src="/Sevvel_logo.jpg"
+                alt="Sevvel Shelters Logo"
+                width={40}
+                height={40}
+                className="h-10"
+              />
+              <span className="font-bold text-xl text-foreground">
+                Sevvel Shelters
+              </span>
             </Link>
           </div>
 
@@ -53,7 +60,11 @@ export function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="text-muted-foreground hover:text-primary"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -77,5 +88,5 @@ export function Navbar() {
         )}
       </div>
     </nav>
-  )
+  );
 }

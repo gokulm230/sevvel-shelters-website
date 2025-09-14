@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["http://localhost:3000", "https://sevvel-shelters-website.vercel.app"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600
+  }
+]

@@ -1,7 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { type Project, getPublicProjects, getAllProjects } from "@/lib/projects"
+import {
+  type Project, 
+  getPublicProjects, 
+  getAllProjects
+} from "@/lib/projects"
 
 export function usePublicProjects() {
   const [projects, setProjects] = useState<Project[]>([])
