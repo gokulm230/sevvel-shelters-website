@@ -3,8 +3,9 @@ import { type User } from '@supabase/supabase-js'
 
 // Supabase configuration with hardcoded values for development
 // These are already set directly here, so we don't need to check env variables
-const supabaseUrl = 'https://kbnurwcwnxokpkeojpdu.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtibnVyd2N3bnhva3BrZW9qcGR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc4Njg0NjYsImV4cCI6MjA3MzQ0NDQ2Nn0.-EnCfUo60XgDq28SZVkptPdBdPyhjOxtB6RJJ7dLO0A'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://kbnurwcwnxokpkeojpdu.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key-here'
+
 
 // Create Supabase client
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
