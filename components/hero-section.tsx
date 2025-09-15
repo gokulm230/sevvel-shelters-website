@@ -7,7 +7,7 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/placeholder-4e3dm.png"
+          src="/real-estate-image.jpg"
           alt="Sevvel Shelters Construction"
           className="w-full h-full object-cover"
         />
