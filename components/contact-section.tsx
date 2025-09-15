@@ -82,9 +82,51 @@ Thank you.
   };
   
   // Function to handle Email contact method
-  const handleEmailContact = () => {
-    // Create email body
-    const emailBody = `
+  const handleEmailContact = async () => {
+    // Import the email service
+    const { sendEmail, createEmailBody } = await import("@/lib/email-service");
+
+    try {
+      // Show a loading message
+      setValidationError("Sending your message...");
+      
+      // Create HTML email body using the service
+      const fullName = `${formData.firstName} ${formData.lastName}`;
+      const emailHTML = createEmailBody({
+        name: fullName,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+      });
+      
+      // Send the email using SMTP.js
+      const success = await sendEmail({
+        to: "info@sevvelshelters.com",
+        subject: formData.subject || "Inquiry from Website",
+        body: emailHTML,
+        from: formData.email, 
+        name: `${formData.firstName} ${formData.lastName}`
+      });
+      
+      if (success) {
+        // Show success message
+        setShowContactModal(false);
+        setValidationError(null);
+        alert("Your message has been sent successfully!");
+        
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        // If SMTP fails, fall back to mailto
+        const emailBody = `
 Hello Sevvel Shelters Team,
 
 I'd like to inquire about your services.
@@ -99,16 +141,22 @@ ${formData.message}
 
 Looking forward to hearing from you.
 Thank you.
-    `.trim();
+        `.trim();
 
-    // Create mailto URL
-    const mailtoLink = `mailto:info@sevvelshelters.com?subject=${encodeURIComponent(
-      formData.subject || "Inquiry from Website"
-    )}&body=${encodeURIComponent(emailBody)}`;
+        // Create mailto URL as fallback
+        const mailtoLink = `mailto:info@sevvelshelters.com?subject=${encodeURIComponent(
+          formData.subject || "Inquiry from Website"
+        )}&body=${encodeURIComponent(emailBody)}`;
 
-    // Open the mail client
-    window.location.href = mailtoLink;
-    setShowContactModal(false);
+        // Open the mail client
+        window.location.href = mailtoLink;
+        setShowContactModal(false);
+      }
+    } catch (error) {
+      console.error("Error in email sending:", error);
+      alert("There was an issue sending your email. Please try WhatsApp instead.");
+      setShowContactModal(false);
+    }
   };
 
   return (

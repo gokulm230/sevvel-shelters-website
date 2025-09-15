@@ -6,6 +6,9 @@ import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
 
+// Add SMTP.js for email functionality
+import Script from 'next/script'
+
 export const metadata: Metadata = {
   title: "Sevvel Shelters - Premium Real Estate in Coimbatore",
   description:
@@ -22,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script src="https://smtpjs.com/v3/smtp.js" strategy="beforeInteractive" />
+      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />

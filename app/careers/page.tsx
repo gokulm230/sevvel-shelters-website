@@ -311,9 +311,52 @@ Thank you.
   };
   
   // Function to handle Email contact method
-  const handleEmailContact = () => {
-    // Create email body
-    const emailBody = `
+  const handleEmailContact = async () => {
+    // Import the email service
+    const { sendEmail, createEmailBody } = await import("@/lib/email-service");
+    
+    try {
+      // Show loading state
+      setValidationError("Sending your application...");
+      
+      // Create HTML email body using the service
+      const emailHTML = createEmailBody({
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.coverLetter || "No cover letter provided.",
+        isJob: true,
+        jobTitle: applicationState.job?.title
+      });
+      
+      // Send the email using SMTP.js
+      const success = await sendEmail({
+        to: "careers@sevvelshelters.com",
+        subject: `Application for ${applicationState.job?.title} Position`,
+        body: emailHTML,
+        from: formData.email, 
+        name: formData.fullName
+      });
+      
+      if (success) {
+        // Show success message and close modal
+        setShowContactModal(false);
+        setValidationError(null);
+        setApplicationState((prev) => ({
+          ...prev,
+          status: "success",
+        }));
+        
+        // Reset form after 5 seconds
+        setTimeout(() => {
+          setApplicationState({
+            show: false,
+            status: "idle",
+          });
+        }, 5000);
+      } else {
+        // If SMTP fails, fall back to mailto
+        const emailBody = `
 Hello Sevvel Shelters Recruiting Team,
 
 I'd like to apply for the ${applicationState.job?.title} position.
@@ -329,46 +372,52 @@ I have attached my resume separately.
 
 Looking forward to hearing from you.
 Thank you.
-    `.trim();
+        `.trim();
 
-    try {
-      // Create mailto URL
-      const mailtoLink = `mailto:careers@sevvelshelters.com?subject=${encodeURIComponent(
-        `Application for ${applicationState.job?.title} Position`
-      )}&body=${encodeURIComponent(emailBody)}`;
+        try {
+          // Create mailto URL as fallback
+          const mailtoLink = `mailto:careers@sevvelshelters.com?subject=${encodeURIComponent(
+            `Application for ${applicationState.job?.title} Position`
+          )}&body=${encodeURIComponent(emailBody)}`;
 
-      // Open the mail client
-      window.location.href = mailtoLink;
-      
-      // After a delay, check if user might need alternative options
-      setTimeout(() => {
-        const needsAlternative = window.confirm(
-          "If your email client didn't open, would you like to use WhatsApp instead?"
-        );
-        
-        if (needsAlternative) {
-          handleWhatsAppContact();
-          return;
+          // Open the mail client
+          window.location.href = mailtoLink;
+          
+          // After a delay, check if user might need alternative options
+          setTimeout(() => {
+            const needsAlternative = window.confirm(
+              "If your email client didn't open, would you like to use WhatsApp instead?"
+            );
+            
+            if (needsAlternative) {
+              handleWhatsAppContact();
+              return;
+            }
+            
+            // Close modal and show success
+            setShowContactModal(false);
+            setApplicationState((prev) => ({
+              ...prev,
+              status: "success",
+            }));
+            
+            // Reset form after 5 seconds
+            setTimeout(() => {
+              setApplicationState({
+                show: false,
+                status: "idle",
+              });
+            }, 5000);
+          }, 1000);
+        } catch (error) {
+          console.error("Error opening email client:", error);
+          alert("There was an issue opening your email client. Please try the WhatsApp option instead.");
         }
-        
-        // Close modal and show success
-        setShowContactModal(false);
-        setApplicationState((prev) => ({
-          ...prev,
-          status: "success",
-        }));
-        
-        // Reset form after 5 seconds
-        setTimeout(() => {
-          setApplicationState({
-            show: false,
-            status: "idle",
-          });
-        }, 5000);
-      }, 1000);
+      }
     } catch (error) {
-      console.error("Error opening email client:", error);
-      alert("There was an issue opening your email client. Please try the WhatsApp option instead.");
+      console.error("Error in email sending:", error);
+      alert("There was an issue sending your application. Please try WhatsApp instead.");
+      setShowContactModal(false);
     }
   };
 
