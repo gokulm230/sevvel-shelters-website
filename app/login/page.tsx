@@ -2,15 +2,17 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { supabase, isSupabaseConfigured } from "@/lib/supabase"
+import { getSupabaseBrowser } from "@/lib/supabase-browser"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Lock } from "lucide-react"
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -25,16 +27,33 @@ export default function LoginPage() {
     setError("")
 
     try {
-      // Skip the isSupabaseConfigured check since we know it's configured
+      // Use the browser client which handles cookies properly
+      const supabaseBrowser = getSupabaseBrowser()
       
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabaseBrowser.auth.signInWithPassword({
         email,
         password
       })
       
       if (signInError) throw signInError
       
-      router.push("/admin")
+      if (data.session) {
+        console.log("Login successful, redirecting to admin panel")
+        
+        // With auth-helpers-nextjs, cookies are handled automatically
+        // Use both router and direct navigation for reliability
+        setTimeout(() => {
+          // First try router navigation
+          router.push('/admin')
+          
+          // Then use direct navigation as fallback
+          setTimeout(() => {
+            window.location.href = '/admin'
+          }, 200)
+        }, 300)
+      } else {
+        throw new Error("No session created")
+      }
     } catch (error: any) {
       setError("Invalid email or password. Please try again.")
       console.error("Login error:", error)
@@ -42,6 +61,17 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const checkSession = async () => {
+      if (supabase) {
+        const { data } = await supabase.auth.getSession()
+        console.log("Current session:", data.session)
+      }
+    }
+    
+    checkSession()
+  }, [])
 
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">

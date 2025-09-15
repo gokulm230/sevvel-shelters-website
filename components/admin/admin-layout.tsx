@@ -5,6 +5,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
+import { getSupabaseBrowser } from "@/lib/supabase-browser"
 import type { User } from '@supabase/supabase-js'
 import { Button } from "@/components/ui/button"
 import { LogOut, Home } from "lucide-react"
@@ -23,34 +24,29 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     // Get the current session
     const getSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession()
+        // Use the browser client
+        const supabaseBrowser = getSupabaseBrowser()
+        const { data: { session } } = await supabaseBrowser.auth.getSession()
         
         if (session?.user) {
           setUser(session.user)
         } else {
-          // For development, use a mock user instead of redirecting
-          setUser({
-            id: "dev-user-id",
-            email: "admin@sevvel.com",
-            role: "authenticated",
-          } as User)
+          // No session found, user is not authenticated
+          setUser(null)
+          // The middleware will handle redirecting to login page
         }
       } catch (error) {
         console.error("Error getting session:", error)
-        // Use mock user in case of error
-        setUser({
-          id: "dev-user-id",
-          email: "admin@sevvel.com",
-          role: "authenticated",
-        } as User)
+        setUser(null)
       }
       setLoading(false)
     }
     
     getSession()
 
-    // Set up auth state change listener - simplified for development
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    // Set up auth state change listener
+    const supabaseBrowser = getSupabaseBrowser()
+    const { data: { subscription } } = supabaseBrowser.auth.onAuthStateChange(
       (event, session) => {
         if (session?.user) {
           setUser(session.user)
@@ -65,7 +61,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut()
+      const supabaseBrowser = getSupabaseBrowser()
+      await supabaseBrowser.auth.signOut()
       router.push("/login")
     } catch (error) {
       console.error("Logout error:", error)
