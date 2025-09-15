@@ -18,6 +18,8 @@ import {
   Mail,
   CheckCircle2,
   AlertCircle,
+  X,
+  Phone,
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -56,6 +58,9 @@ export function Careers() {
     show: false,
     status: "idle",
   });
+  
+  // Add showContactModal state for the contact method selection
+  const [showContactModal, setShowContactModal] = useState(false);
 
   // Job listings data
   const jobs: Job[] = [
@@ -254,18 +259,48 @@ export function Careers() {
       setValidationError("Please enter your email address");
       return;
     }
-    if (!formData.resume) {
-      setValidationError("Please upload your resume");
+    if (!formData.message && !formData.resume) {
+      setValidationError("Please either upload your resume or include a message");
       return;
     }
 
-    // In a real application, you would send this data to your server
-    // For now, we'll simulate a successful submission
+    // Show contact method selection modal instead of simulating submission
+    setShowContactModal(true);
+  };
+  
+  // Function to handle WhatsApp contact method
+  const handleWhatsAppContact = () => {
+    // Create WhatsApp message
+    const whatsappMessage = `
+Hello Sevvel Shelters Recruiting Team,
+
+I'd like to apply for the ${applicationState.job?.title} position.
+
+Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phone || "Not provided"}
+
+${formData.coverLetter ? `Cover Letter: ${formData.coverLetter}` : ""}
+
+I have attached my resume separately.
+
+Looking forward to hearing from you.
+Thank you.
+    `.trim();
+
+    // Create WhatsApp URL with the phone number 6383755749
+    const whatsappLink = `https://wa.me/916383755749?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappLink, '_blank');
+    
+    // Close the modal and show success message
+    setShowContactModal(false);
     setApplicationState((prev) => ({
       ...prev,
       status: "success",
     }));
-
+    
     // Reset form after 5 seconds
     setTimeout(() => {
       setApplicationState({
@@ -274,20 +309,82 @@ export function Careers() {
       });
     }, 5000);
   };
+  
+  // Function to handle Email contact method
+  const handleEmailContact = () => {
+    // Create email body
+    const emailBody = `
+Hello Sevvel Shelters Recruiting Team,
+
+I'd like to apply for the ${applicationState.job?.title} position.
+
+Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phone || "Not provided"}
+
+${formData.coverLetter ? `Cover Letter: 
+${formData.coverLetter}` : ""}
+
+I have attached my resume separately.
+
+Looking forward to hearing from you.
+Thank you.
+    `.trim();
+
+    try {
+      // Create mailto URL
+      const mailtoLink = `mailto:careers@sevvelshelters.com?subject=${encodeURIComponent(
+        `Application for ${applicationState.job?.title} Position`
+      )}&body=${encodeURIComponent(emailBody)}`;
+
+      // Open the mail client
+      window.location.href = mailtoLink;
+      
+      // After a delay, check if user might need alternative options
+      setTimeout(() => {
+        const needsAlternative = window.confirm(
+          "If your email client didn't open, would you like to use WhatsApp instead?"
+        );
+        
+        if (needsAlternative) {
+          handleWhatsAppContact();
+          return;
+        }
+        
+        // Close modal and show success
+        setShowContactModal(false);
+        setApplicationState((prev) => ({
+          ...prev,
+          status: "success",
+        }));
+        
+        // Reset form after 5 seconds
+        setTimeout(() => {
+          setApplicationState({
+            show: false,
+            status: "idle",
+          });
+        }, 5000);
+      }, 1000);
+    } catch (error) {
+      console.error("Error opening email client:", error);
+      alert("There was an issue opening your email client. Please try the WhatsApp option instead.");
+    }
+  };
 
   return (
     <section id="careers" className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          <button 
-            onClick={() => window.location.href = "/"} 
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-            </svg>
-            Back to Home
-          </button>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <button 
+          onClick={() => window.location.href = "/"} 
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          Back to Home
+        </button>
+      </div>
       {/* <Navbar /> */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -673,98 +770,95 @@ export function Careers() {
           </div>
         )}
 
-        {/* FAQs Section */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
-            Frequently Asked Questions
-          </h3>
+        {/* Contact Method Selection Modal */}
+        {showContactModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="bg-background rounded-lg p-6 w-full max-w-md shadow-xl">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-foreground">Choose Contact Method</h3>
+                <button 
+                  onClick={() => setShowContactModal(false)}
+                  className="p-1 rounded-full hover:bg-muted"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <p className="mb-6 text-muted-foreground">
+                How would you like to send your application to Sevvel Shelters?
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button
+                  onClick={handleEmailContact}
+                  className="flex flex-col items-center justify-center gap-3 h-auto py-6"
+                  variant="outline"
+                >
+                  <Mail className="h-8 w-8" />
+                  <div>
+                    <div className="font-medium">Email</div>
+                    <div className="text-xs text-muted-foreground">Send via email client</div>
+                  </div>
+                </Button>
+                
+                <Button
+                  onClick={handleWhatsAppContact}
+                  className="flex flex-col items-center justify-center gap-3 h-auto py-6 bg-[#25D366] hover:bg-[#20BD5C] text-white"
+                >
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                  </svg>
+                  <div>
+                    <div className="font-medium">WhatsApp</div>
+                    <div className="text-xs opacity-90">Chat on WhatsApp</div>
+                  </div>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
 
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>
-                What is the hiring process like at Sevvel Shelters?
-              </AccordionTrigger>
-              <AccordionContent>
-                Our hiring process typically includes an initial application
-                review, followed by a phone screening, one or two interviews
-                (technical and/or behavioral), and possibly a skills assessment
-                depending on the role. The entire process usually takes 2-3
-                weeks, and we keep candidates informed at every stage.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-2">
-              <AccordionTrigger>
-                Do you offer internships or entry-level positions?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes, we offer both internships and entry-level positions across
-                various departments. Our internship programs are designed to
-                provide meaningful work experience and mentorship to students
-                and recent graduates. We also have dedicated entry-level roles
-                that include training and development opportunities.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
-                What benefits and perks do you offer?
-              </AccordionTrigger>
-              <AccordionContent>
-                We provide a comprehensive benefits package that includes health
-                insurance, retirement benefits, paid time off, professional
-                development allowances, and flexible work arrangements. We also
-                organize team events, celebrate achievements, and foster a
-                supportive work environment focused on employee well-being.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-4">
-              <AccordionTrigger>
-                How do you support professional development?
-              </AccordionTrigger>
-              <AccordionContent>
-                We invest in our team members' growth through mentorship
-                programs, training opportunities, conference attendance, and
-                continuing education support. We encourage employees to expand
-                their skills and knowledge, and we provide pathways for career
-                advancement within the company.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-5">
-              <AccordionTrigger>
-                I don't see a position that matches my skills. Can I still
-                apply?
-              </AccordionTrigger>
-              <AccordionContent>
-                Absolutely! We're always interested in connecting with talented
-                professionals. You can submit your resume for general
-                consideration, and we'll keep it on file for future
-                opportunities. Please email your resume to
-                careers@sevvelshelters.com with a note about your areas of
-                interest.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Contact CTA */}
-        <div className="text-center">
+        {/* Contact CTA Section - Enhanced with direct communication options */}
+        <div className="text-center mt-16 p-6 bg-primary/5 rounded-lg">
           <h3 className="text-xl font-semibold text-foreground mb-4">
             Have Questions About Careers at Sevvel Shelters?
           </h3>
           <p className="text-muted-foreground mb-6">
-            We're here to help you find the right opportunity to grow with us.
+            We're here to help you find the right opportunity to grow with us. Reach out through any of these channels:
           </p>
-          <Button asChild>
-            <a
-              href="mailto:careers@sevvelshelters.com"
-              className="inline-flex items-center"
-            >
-              <Mail className="mr-2 h-4 w-4" /> Contact Our Recruiting Team
-            </a>
-          </Button>
+          
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild variant="outline">
+              <a
+                href="mailto:careers@sevvelshelters.com"
+                className="inline-flex items-center"
+              >
+                <Mail className="mr-2 h-4 w-4" /> Email Us
+              </a>
+            </Button>
+            
+            <Button asChild className="bg-[#25D366] hover:bg-[#20BD5C] text-white">
+              <a
+                href="https://wa.me/916383755749?text=Hello%20Sevvel%20Shelters%20Team%2C%0A%0AI'm%20interested%20in%20career%20opportunities%20with%20your%20company.%0A%0AThank%20you."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center"
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" className="mr-2">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                </svg> WhatsApp Us
+              </a>
+            </Button>
+            
+            <Button asChild variant="secondary">
+              <a
+                href="tel:+916383755749"
+                className="inline-flex items-center"
+              >
+                <Phone className="mr-2 h-4 w-4" /> Call Us
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
