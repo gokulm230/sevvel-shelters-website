@@ -78,7 +78,6 @@ const formatProject = (project: any): Project => {
 
 // Get all visible projects for public display
 export async function getPublicProjects(): Promise<Project[]> {
-  // Return mock data if Supabase is not configured
   if (!isSupabaseConfigured) {
     console.log("Supabase not configured, returning mock projects data")
     return mockProjects.filter((project) => project.visible)
@@ -88,7 +87,7 @@ export async function getPublicProjects(): Promise<Project[]> {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
-      .eq('visible', true)
+      .eq('visible', true)  // This filters to only show visible projects
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -98,7 +97,6 @@ export async function getPublicProjects(): Promise<Project[]> {
     return data.map(formatProject)
   } catch (error) {
     console.error("Error fetching public projects:", error)
-    // Return mock data as fallback
     return mockProjects.filter((project) => project.visible)
   }
 }
@@ -114,7 +112,7 @@ export async function getAllProjects(): Promise<Project[]> {
   try {
     const { data, error } = await supabase
       .from('projects')
-      .select('*')
+      .select('*')  // No visibility filter here - shows all projects
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -124,7 +122,6 @@ export async function getAllProjects(): Promise<Project[]> {
     return data.map(formatProject)
   } catch (error) {
     console.error("Error fetching all projects:", error)
-    // Return mock data as fallback
     return mockProjects
   }
 }
