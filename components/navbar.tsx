@@ -26,7 +26,7 @@ export function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
               <Image
-                src="/Sevvel_logo.jpg"
+                src="/Sevvel_logo.png"
                 alt="Sevvel Shelters Logo"
                 width={40}
                 height={40}

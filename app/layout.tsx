@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Discover premium real estate projects and services in Coimbatore with Sevvel Shelters. Your trusted partner for quality homes and commercial spaces.",
   icons: {
-    icon: "/Sevvel_logo.jpg",
+    icon: "/Sevvel_logo.png",
   },
 }
 

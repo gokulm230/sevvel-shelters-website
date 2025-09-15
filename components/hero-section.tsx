@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Phone } from "lucide-react"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/real-estate-image.jpg"
-          alt="Sevvel Shelters Construction"
-          className="w-full h-full object-cover"
+        <Image
+          src="/Sevvel_logo.png"
+          alt="Sevvel Shelters Background"
+          layout="fill"
+          objectFit="cover"
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>

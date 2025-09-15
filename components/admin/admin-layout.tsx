@@ -93,7 +93,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             <div className="flex items-center space-x-4">
               <Link href="/admin" className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <img src="/Sevvel_logo.jpg" alt="Sevvel Shelters Logo" />
+                  <img src="/Sevvel_logo.png" alt="Sevvel Shelters Logo" />
                 </div>
                 <span className="font-bold text-xl text-foreground">Admin Panel</span>
               </Link>
