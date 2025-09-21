@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { AdminLayout } from "@/components/admin/admin-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,7 +9,27 @@ import Link from "next/link"
 import { useAllProjects } from "@/hooks/use-projects"
 
 export default function ProjectsPage() {
-  const { projects, loading, error } = useAllProjects()
+  const { projects, loading, error, deleteProject } = useAllProjects()
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  const handleDeleteClick = async (projectId: string, projectTitle: string) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${projectTitle}"? This action cannot be undone.`
+    )
+    
+    if (confirmed) {
+      try {
+        setDeletingId(projectId)
+        await deleteProject(projectId)
+        // Project will be removed from the list automatically via refetch in the hook
+      } catch (error) {
+        console.error('Failed to delete project:', error)
+        alert('Failed to delete project. Please try again.')
+      } finally {
+        setDeletingId(null)
+      }
+    }
+  }
 
   return (
     <AdminLayout>
@@ -71,7 +91,13 @@ export default function ProjectsPage() {
                             <Pencil className="h-4 w-4" />
                           </Button>
                         </Link>
-                        <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="text-destructive hover:text-destructive"
+                          onClick={() => handleDeleteClick(project.id!, project.title)}
+                          disabled={deletingId === project.id}
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
