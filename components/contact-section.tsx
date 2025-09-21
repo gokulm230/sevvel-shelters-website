@@ -100,14 +100,88 @@ Thank you.
         message: formData.message,
       });
       
-      // Send the email using SMTP.js
-      const success = await sendEmail({
+      // Send the email to Sevvel Shelters
+      const successToCompany = await sendEmail({
         to: "info@sevvelshelters.com",
         subject: formData.subject || "Inquiry from Website",
         body: emailHTML,
         from: formData.email, 
         name: `${formData.firstName} ${formData.lastName}`
       });
+      
+      // Also send a confirmation email to the user
+      const confirmationHTML = `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #eaeaea;
+                border-radius: 5px;
+              }
+              .header {
+                background-color: #f8f9fa;
+                padding: 15px;
+                border-bottom: 1px solid #eaeaea;
+                text-align: center;
+              }
+              .content {
+                padding: 20px 0;
+              }
+              .footer {
+                margin-top: 20px;
+                font-size: 12px;
+                color: #666;
+                text-align: center;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h2>Thank You for Contacting Sevvel Shelters</h2>
+              </div>
+              <div class="content">
+                <p>Dear ${formData.firstName},</p>
+                <p>Thank you for reaching out to us. We have received your inquiry and will get back to you shortly.</p>
+                
+                <p><strong>Your message details:</strong></p>
+                <p><strong>Subject:</strong> ${formData.subject || "Inquiry from Website"}</p>
+                <p><strong>Message:</strong></p>
+                <p>${formData.message.replace(/\n/g, '<br>')}</p>
+                
+                <p>If you have any additional questions, please don't hesitate to contact us.</p>
+                
+                <p>Best regards,<br>
+                Sevvel Shelters Team<br>
+                Phone: +91 6383755749<br>
+                Email: info@sevvelshelters.com</p>
+              </div>
+              <div class="footer">
+                <p>This is an automated confirmation message. Please do not reply to this email.</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `;
+      
+      const successToUser = await sendEmail({
+        to: formData.email,
+        subject: "Thank You for Contacting Sevvel Shelters",
+        body: confirmationHTML,
+        from: "info@sevvelshelters.com",
+        name: "Sevvel Shelters"
+      });
+      
+      // Consider the overall success
+      const success = successToCompany || successToUser;
       
       if (success) {
         // Show success message

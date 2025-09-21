@@ -329,14 +329,83 @@ Thank you.
         jobTitle: applicationState.job?.title
       });
       
-      // Send the email using SMTP.js
-      const success = await sendEmail({
-        to: "careers@sevvelshelters.com",
+      // Send the email to Sevvel Shelters
+      const successToCompany = await sendEmail({
+        to: "gokulmanikandan230@gmail.com", // The company's email address
         subject: `Application for ${applicationState.job?.title} Position`,
         body: emailHTML,
         from: formData.email, 
         name: formData.fullName
       });
+      
+      // Also send a confirmation email to the user/applicant
+      const confirmationHTML = `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #eaeaea;
+                border-radius: 5px;
+              }
+              .header {
+                background-color: #f8f9fa;
+                padding: 15px;
+                border-bottom: 1px solid #eaeaea;
+                text-align: center;
+              }
+              .content {
+                padding: 20px 0;
+              }
+              .footer {
+                margin-top: 20px;
+                font-size: 12px;
+                color: #666;
+                text-align: center;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h2>Thank You for Your Application to Sevvel Shelters</h2>
+              </div>
+              <div class="content">
+                <p>Dear ${formData.fullName},</p>
+                <p>Thank you for applying to the <strong>${applicationState.job?.title}</strong> position at Sevvel Shelters. We have received your application and our recruitment team will review it shortly.</p>
+                
+                <p>If your qualifications match our requirements, we will contact you for the next steps in the hiring process.</p>
+                
+                <p>Best regards,<br>
+                Sevvel Shelters HR Team<br>
+                Phone: +91 6383755749<br>
+                Email: careers@sevvelshelters.com</p>
+              </div>
+              <div class="footer">
+                <p>This is an automated confirmation message. Please do not reply to this email.</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `;
+      
+      const successToUser = await sendEmail({
+        to: formData.email,
+        subject: `Your Application for ${applicationState.job?.title} Position at Sevvel Shelters`,
+        body: confirmationHTML,
+        from: "careers@sevvelshelters.com",
+        name: "Sevvel Shelters Careers"
+      });
+      
+      // Consider the overall success
+      const success = successToCompany || successToUser;
       
       if (success) {
         // Show success message and close modal

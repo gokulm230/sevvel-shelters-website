@@ -33,13 +33,13 @@ export async function sendEmail(data: EmailData): Promise<boolean> {
     if (typeof window !== 'undefined' && typeof window.Email !== 'undefined') {
       // Use the reply-to header to make the email appear from the user
       // while still using the company's SMTP server
-      const fromEmail = "info@sevvelshelters.com"; // Always use your domain email for sending
+      const fromEmail = "gokulmanikandan35@gmail.com"; // Always use your domain email for sending
       const fromName = data.name || "Website Contact";
       const replyTo = data.from || fromEmail;
       
       const response = await window.Email.send({
         Host: "s1.maildns.net",
-        Username: "info@sevvelshelters.com", // Replace with your actual email
+        Username: "gokulmanikandan230@gmail.com", // Replace with your actual email
         Password: "SevvelShelters2025", // Replace with your actual password
         To: data.to,
         From: `${fromName} <${fromEmail}>`,
