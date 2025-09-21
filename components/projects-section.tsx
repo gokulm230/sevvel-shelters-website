@@ -1,15 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { MapPin, Calendar, Home, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { usePublicProjects } from "@/hooks/use-projects"
+import { ProjectDetailsModal } from "@/components/project-details-modal"
+import { AutoSlidingProjectCard } from "@/components/auto-sliding-project-card"
+import { type Project } from "@/lib/projects"
 
 export function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { projects, loading, error } = usePublicProjects()
+
+  const openModal = (project: Project) => {
+    setSelectedProject(project)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setSelectedProject(null)
+  }
 
   if (loading) {
     return (
@@ -74,55 +86,11 @@ export function ProjectsSection() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => (
-                <Card
+                <AutoSlidingProjectCard 
                   key={project.id}
-                  className="overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
-                  onClick={() => setSelectedProject(project.id || null)}
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={project.images?.[0] || "/placeholder.svg"}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <Badge
-                      className={`absolute top-4 right-4 ${
-                        project.status === "Ongoing"
-                          ? "bg-primary text-primary-foreground"
-                          : project.status === "Completed"
-                            ? "bg-secondary text-secondary-foreground"
-                            : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {project.status}
-                    </Badge>
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                      {project.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-muted-foreground text-sm">{project.description}</p>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-2 text-primary" />
-                        {project.location}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Home className="h-4 w-4 mr-2 text-primary" />
-                        {project.units}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-2 text-primary" />
-                        Expected: {project.completion}
-                      </div>
-                    </div>
-
-                    <Button className="w-full mt-4 bg-primary hover:bg-primary/90">View Details</Button>
-                  </CardContent>
-                </Card>
+                  project={project}
+                  onOpenModal={openModal}
+                />
               ))}
             </div>
 
@@ -137,6 +105,13 @@ export function ProjectsSection() {
             </div>
           </>
         )}
+
+        {/* Project Details Modal */}
+        <ProjectDetailsModal
+          project={selectedProject}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
       </div>
     </section>
   )

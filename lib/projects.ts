@@ -1,4 +1,11 @@
-import { supabase, isSupabaseConfigured } from "./supabase"
+import { getSupabaseBrowser } from "./supabase-browser"
+
+// Check if environment variables are properly set
+const isSupabaseConfigured = 
+  typeof process.env.NEXT_PUBLIC_SUPABASE_URL === 'string' && 
+  typeof process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY === 'string' &&
+  process.env.NEXT_PUBLIC_SUPABASE_URL.includes('supabase.co') && 
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.startsWith('eyJ')
 
 export interface Project {
   id?: string
@@ -84,6 +91,7 @@ export async function getPublicProjects(): Promise<Project[]> {
   }
 
   try {
+    const supabase = getSupabaseBrowser()
     const { data, error } = await supabase
       .from('projects')
       .select('*')
@@ -110,6 +118,7 @@ export async function getAllProjects(): Promise<Project[]> {
   }
 
   try {
+    const supabase = getSupabaseBrowser()
     const { data, error } = await supabase
       .from('projects')
       .select('*')  // No visibility filter here - shows all projects
@@ -126,6 +135,40 @@ export async function getAllProjects(): Promise<Project[]> {
   }
 }
 
+// Get single project by ID
+export async function getProjectById(id: string): Promise<Project | null> {
+  // Return mock data if Supabase is not configured
+  if (!isSupabaseConfigured) {
+    console.log("Supabase not configured, returning mock project data")
+    const project = mockProjects.find(p => p.id === id)
+    return project || null
+  }
+
+  try {
+    const supabase = getSupabaseBrowser()
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // No rows returned
+        return null
+      }
+      throw error
+    }
+
+    return formatProject(data)
+  } catch (error) {
+    console.error("Error fetching project:", error)
+    // Try to find in mock data as fallback
+    const project = mockProjects.find(p => p.id === id)
+    return project || null
+  }
+}
+
 // Add new project
 export async function addProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<string> {
   if (!isSupabaseConfigured) {
@@ -133,6 +176,7 @@ export async function addProject(project: Omit<Project, "id" | "createdAt" | "up
   }
 
   try {
+    const supabase = getSupabaseBrowser()
     const { data, error } = await supabase
       .from('projects')
       .insert({
@@ -168,14 +212,31 @@ export async function updateProject(id: string, updates: Partial<Project>): Prom
     // Remove createdAt and updatedAt from updates if present
     const { createdAt, updatedAt, ...filteredUpdates } = updates
 
+    const supabase = getSupabaseBrowser()
+    
+    // Debug: Check authentication status
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    console.log('Current session:', session ? 'Authenticated' : 'Not authenticated')
+    console.log('User ID:', session?.user?.id)
+    
+    if (sessionError) {
+      console.error('Session error:', sessionError)
+    }
+
+    // Debug: Log the update operation
+    console.log('Updating project:', id, 'with data:', filteredUpdates)
+
     const { error } = await supabase
       .from('projects')
       .update(filteredUpdates)
       .eq('id', id)
     
     if (error) {
+      console.error('Supabase update error:', error)
       throw error
     }
+    
+    console.log('Project updated successfully')
   } catch (error) {
     console.error("Error updating project:", error)
     throw error
@@ -189,14 +250,19 @@ export async function deleteProject(id: string): Promise<void> {
   }
 
   try {
+    console.log(`Attempting to delete project with ID: ${id}`)
+    const supabase = getSupabaseBrowser()
     const { error } = await supabase
       .from('projects')
       .delete()
       .eq('id', id)
     
     if (error) {
+      console.error('Supabase delete error:', error)
       throw error
     }
+    
+    console.log(`Successfully deleted project with ID: ${id}`)
   } catch (error) {
     console.error("Error deleting project:", error)
     throw error
@@ -214,6 +280,7 @@ export async function uploadProjectImage(file: File, projectId: string): Promise
     const fileName = `${projectId}_${timestamp}_${file.name}`
     const filePath = `projects/${fileName}`
     
+    const supabase = getSupabaseBrowser()
     // Upload the file to Supabase Storage
     const { error: uploadError } = await supabase
       .storage
@@ -257,6 +324,7 @@ export async function deleteProjectImage(imageUrl: string): Promise<void> {
     // Extract the path after the bucket name
     const filePath = pathParts.slice(bucketIndex + 1).join('/')
     
+    const supabase = getSupabaseBrowser()
     // Delete the file
     const { error } = await supabase
       .storage
