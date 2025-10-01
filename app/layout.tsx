@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import { LayoutWrapper } from "@/components/layout-wrapper"
 import "./globals.css"
 
 // Add SMTP.js for email functionality
@@ -29,7 +30,9 @@ export default function RootLayout({
         <Script src="https://smtpjs.com/v3/smtp.js" strategy="beforeInteractive" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <LayoutWrapper>
+          <Suspense fallback={null}>{children}</Suspense>
+        </LayoutWrapper>
         <Analytics />
       </body>
     </html>
