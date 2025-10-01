@@ -241,15 +241,6 @@ export default function NewProject() {
                 )}
               </div>
 
-              {/* Visibility Toggle */}
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="visible"
-                  checked={formData.visible}
-                  onCheckedChange={(checked) => handleInputChange("visible", checked)}
-                />
-                <Label htmlFor="visible">Make project visible on website</Label>
-              </div>
 
               {/* Submit Button */}
               <div className="flex space-x-4">
