@@ -1,73 +1,124 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Building2, Hammer, FileText, Users, Wrench, Shield } from "lucide-react"
+"use client"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { Building2, Handshake, Scale } from "lucide-react"
+import Link from "next/link"
 
 export function ServicesSection() {
   const services = [
     {
+      id: "liaison",
+      title: "Liaison Services",
+      description: "We provide government-approved liaison services for businesses, ensuring smooth operations through our guidance.",
       icon: Building2,
-      title: "Residential Development",
-      description:
-        "Premium apartments, villas, and gated communities designed for modern living with all essential amenities.",
+      image: "/modern-office-building-with-green-architecture-and.jpg",
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600"
     },
     {
-      icon: Hammer,
-      title: "Commercial Projects",
-      description:
-        "Office complexes, retail spaces, and commercial buildings that meet business requirements and growth needs.",
+      id: "real-estate",
+      title: "Real Estate Services", 
+      description: "As a leading real estate market, our dedicated team provides tailored solutions for buying, selling, and investing in prime properties.",
+      icon: Handshake,
+      image: "/luxury-residential-tower.jpg",
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600"
     },
     {
-      icon: FileText,
-      title: "Property Consultation",
-      description:
-        "Expert guidance on property investment, legal documentation, and market analysis for informed decisions.",
-    },
-    {
-      icon: Users,
-      title: "Project Management",
-      description:
-        "End-to-end project management services ensuring timely delivery and quality construction standards.",
-    },
-    {
-      icon: Wrench,
-      title: "Construction Services",
-      description:
-        "Complete construction solutions from foundation to finishing with modern techniques and quality materials.",
-    },
-    {
-      icon: Shield,
-      title: "After-Sales Support",
-      description:
-        "Comprehensive maintenance and support services to ensure long-term satisfaction and property value.",
-    },
+      id: "legal",
+      title: "Legal Services",
+      description: "We offer expert counsel and comprehensive services tailored to meet diverse legal requirements with precision and reliability.",
+      icon: Scale,
+      image: "/modern-apartment-complex-with-green-landscaping.jpg",
+      iconBg: "bg-blue-100", 
+      iconColor: "text-blue-600"
+    }
   ]
 
   return (
-    <section id="services" className="py-20 bg-muted/30">
+    <section id="services" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 text-balance">Our Services</h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-            Comprehensive real estate solutions tailored to meet your needs, from initial consultation to project
-            completion and beyond.
-          </p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Our Core Services
+          </h2>
         </div>
 
+        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <Card key={index} className="hover:shadow-lg transition-all duration-300 group">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                  {service.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">{service.description}</p>
-              </CardContent>
-            </Card>
+          {services.map((service) => (
+            <Link key={service.id} href={`/services?service=${service.id}`}>
+              <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 group border-0 cursor-pointer">
+                <CardContent className="p-0">
+                  {/* Service Image */}
+                  <div className="relative h-48 overflow-hidden rounded-t-lg bg-gradient-to-br from-blue-400 to-purple-500">
+                    <img 
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    
+                    {/* Service Icon Overlay */}
+                    <div className={`absolute top-4 left-4 w-12 h-12 ${service.iconBg} rounded-full flex items-center justify-center`}>
+                      <service.icon className={`h-6 w-6 ${service.iconColor}`} />
+                    </div>
+                  </div>
+
+                  {/* Service Content */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
+        </div>
+
+        {/* Why Choose Us Section */}
+        <div className="mt-20 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-8">
+            Why Choose Sevvel Shelters
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building2 className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Expert Team</h4>
+              <p className="text-gray-600">Experienced professionals dedicated to your success</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Handshake className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Trusted Service</h4>
+              <p className="text-gray-600">Reliable and transparent business practices</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Scale className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Legal Compliance</h4>
+              <p className="text-gray-600">Ensuring all regulations and standards are met</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building2 className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Quality Results</h4>
+              <p className="text-gray-600">Delivering excellence in every project</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

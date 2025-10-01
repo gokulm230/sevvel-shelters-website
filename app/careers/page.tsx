@@ -259,7 +259,7 @@ export function Careers() {
       setValidationError("Please enter your email address");
       return;
     }
-    if (!formData.message && !formData.resume) {
+    if (!formData.coverLetter && !formData.resume) {
       setValidationError("Please either upload your resume or include a message");
       return;
     }
@@ -970,7 +970,7 @@ Thank you.
             
             <Button asChild variant="secondary">
               <a
-                href="tel:+916383755749"
+                href="tel:+919489533001"
                 className="inline-flex items-center"
               >
                 <Phone className="mr-2 h-4 w-4" /> Call Us
