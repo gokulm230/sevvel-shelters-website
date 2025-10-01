@@ -206,9 +206,9 @@ Thank you.
                     <h4 className="font-semibold text-foreground mb-1">
                       Phone
                     </h4>
-                    <p className="text-muted-foreground">+91 6383755749</p>
+                    <p className="text-muted-foreground">+91 9489533001</p>
                     <a 
-                      href="https://wa.me/916383755749" 
+                      href="https://wa.me/919489533001" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="inline-flex items-center text-primary hover:underline mt-1"
