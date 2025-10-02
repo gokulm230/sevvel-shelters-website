@@ -263,7 +263,7 @@ Thank you.
                       Address
                     </h4>
                     <p className="text-muted-foreground">
-                      Shop No 1, Mohanatamil Adukkagam
+                      Shop No 2, Mohanatamil Adukkagam
                       <br />
                       LN Nagar, Kalapatti
                       <br />
