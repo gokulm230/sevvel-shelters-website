@@ -1,23 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Building2, Handshake, Scale, ArrowLeft, Phone } from "lucide-react"
 import Link from "next/link"
 
-export default function ServicesPage() {
+function ServicesPageContent() {
   const searchParams = useSearchParams()
-  const serviceParam = searchParams.get('service')
-  const [activeService, setActiveService] = useState(serviceParam || "liaison")
-
-  // Update active service when URL parameter changes
-  useEffect(() => {
-    if (serviceParam) {
-      setActiveService(serviceParam)
-    }
-  }, [serviceParam])
+  const [activeService, setActiveService] = useState<string | null>(null)
+  const [isClient, setIsClient] = useState(false)
 
   const services = {
     liaison: {
@@ -72,14 +65,52 @@ export default function ServicesPage() {
     }
   }
 
+  // Handle client-side mounting
+  useEffect(() => {
+    setIsClient(true)
+    const serviceParam = searchParams?.get('service')
+    
+    // Map URL params to service keys
+    const serviceMap: { [key: string]: string } = {
+      'real-estate': 'realEstate',
+      'legal': 'legal',
+      'liaison': 'liaison'
+    }
+    
+    const mappedService = serviceParam ? serviceMap[serviceParam] : null
+    setActiveService(mappedService && services[mappedService as keyof typeof services] ? mappedService : 'liaison')
+  }, [searchParams])
+
+  // Show loading state until client-side hydration is complete and activeService is set
+  if (!isClient || !activeService) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading services...</p>
+        </div>
+      </div>
+    )
+  }
+
   const currentService = services[activeService as keyof typeof services]
+
+  if (!currentService) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Service not found</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-blue-600 text-white py-16">
+      <div className="bg-green-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="inline-flex items-center text-white hover:text-blue-200 mb-4">
+          <Link href="/" className="inline-flex items-center text-white hover:text-green-200 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
@@ -119,7 +150,11 @@ export default function ServicesPage() {
 
             {/* Service Features */}
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">What We Provide In Liaison Services</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                What We Provide In {currentService.id === 'liaison' ? 'Liaison Services' : 
+                                   currentService.id === 'realEstate' ? 'Real Estate Services' : 
+                                   'Legal Services'}
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {currentService.features.map((feature, index) => {
                   const [title, description] = feature.split(' - ');
@@ -127,11 +162,11 @@ export default function ServicesPage() {
                     <Card key={index} className="p-6 hover:shadow-lg transition-shadow duration-300">
                       <CardContent className="p-0">
                         <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                            <div className="w-6 h-6 bg-blue-600 rounded"></div>
+                          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                            <div className="w-6 h-6 bg-green-600 rounded"></div>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-blue-600 mb-2">{title}</h4>
+                            <h4 className="text-lg font-semibold text-green-600 mb-2">{title}</h4>
                             <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
                           </div>
                         </div>
@@ -143,11 +178,11 @@ export default function ServicesPage() {
             </div>
 
             {/* Contact CTA */}
-            <div className="bg-blue-50 p-6 rounded-lg">
+            <div className="bg-green-50 p-6 rounded-lg">
               <h3 className="text-xl font-bold text-gray-900 mb-2">Need Help? Call Us Now</h3>
               <div className="flex items-center">
-                <Phone className="h-5 w-5 text-blue-600 mr-2" />
-                <span className="text-lg font-semibold text-blue-600">+91 9489533001</span>
+                <Phone className="h-5 w-5 text-green-600 mr-2" />
+                <span className="text-lg font-semibold text-green-600">+91 9489533001</span>
               </div>
             </div>
           </div>
@@ -156,7 +191,7 @@ export default function ServicesPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-8">
               <CardContent className="p-0">
-                <div className="bg-blue-600 text-white p-4 rounded-t-lg">
+                <div className="bg-green-600 text-white p-4 rounded-t-lg">
                   <h3 className="text-lg font-semibold">Our Services</h3>
                 </div>
                 
@@ -167,7 +202,7 @@ export default function ServicesPage() {
                       onClick={() => setActiveService(service.id)}
                       className={`w-full text-left p-3 rounded-lg transition-colors ${
                         activeService === service.id
-                          ? 'bg-blue-600 text-white'
+                          ? 'bg-green-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
@@ -193,7 +228,7 @@ export default function ServicesPage() {
                 </div>
                 <h4 className="text-lg font-semibold text-gray-900 mb-2">Get Expert Consultation</h4>
                 <p className="text-gray-600 mb-4">Contact our experts for personalized service solutions</p>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button className="w-full bg-green-600 hover:bg-green-700">
                   Contact Now
                 </Button>
               </CardContent>
@@ -202,5 +237,20 @@ export default function ServicesPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ServicesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading services...</p>
+        </div>
+      </div>
+    }>
+      <ServicesPageContent />
+    </Suspense>
   )
 }

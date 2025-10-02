@@ -6,9 +6,9 @@ export function HeroSection() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute top-16 inset-0 z-0">
         <Image
-          src="/Sevvel_logo.png"
+          src="/set-designer-work-indoors.jpg"
           alt="Sevvel Shelters Background"
           layout="fill"
           objectFit="cover"

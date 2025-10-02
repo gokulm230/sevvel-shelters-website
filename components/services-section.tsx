@@ -12,8 +12,8 @@ export function ServicesSection() {
       description: "We provide government-approved liaison services for businesses, ensuring smooth operations through our guidance.",
       icon: Building2,
       image: "/modern-office-building-with-green-architecture-and.jpg",
-      iconBg: "bg-blue-100",
-      iconColor: "text-blue-600"
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600"
     },
     {
       id: "real-estate",
@@ -21,8 +21,8 @@ export function ServicesSection() {
       description: "As a leading real estate market, our dedicated team provides tailored solutions for buying, selling, and investing in prime properties.",
       icon: Handshake,
       image: "/luxury-residential-tower.jpg",
-      iconBg: "bg-blue-100",
-      iconColor: "text-blue-600"
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600"
     },
     {
       id: "legal",
@@ -30,8 +30,8 @@ export function ServicesSection() {
       description: "We offer expert counsel and comprehensive services tailored to meet diverse legal requirements with precision and reliability.",
       icon: Scale,
       image: "/modern-apartment-complex-with-green-landscaping.jpg",
-      iconBg: "bg-blue-100", 
-      iconColor: "text-blue-600"
+      iconBg: "bg-green-100", 
+      iconColor: "text-green-600"
     }
   ]
 
@@ -52,7 +52,7 @@ export function ServicesSection() {
               <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 group border-0 cursor-pointer">
                 <CardContent className="p-0">
                   {/* Service Image */}
-                  <div className="relative h-48 overflow-hidden rounded-t-lg bg-gradient-to-br from-blue-400 to-purple-500">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg bg-gradient-to-br from-green-400 to-purple-500">
                     <img 
                       src={service.image}
                       alt={service.title}
@@ -67,7 +67,7 @@ export function ServicesSection() {
 
                   {/* Service Content */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors">
                       {service.title}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
@@ -82,38 +82,38 @@ export function ServicesSection() {
 
         {/* Why Choose Us Section */}
         <div className="mt-20 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-green-600 mb-8">
             Why Choose Sevvel Shelters
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building2 className="h-8 w-8 text-green-600" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Expert Team</h4>
               <p className="text-gray-600">Experienced professionals dedicated to your success</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Handshake className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Handshake className="h-8 w-8 text-green-600" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Trusted Service</h4>
               <p className="text-gray-600">Reliable and transparent business practices</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Scale className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Scale className="h-8 w-8 text-green-600" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Legal Compliance</h4>
               <p className="text-gray-600">Ensuring all regulations and standards are met</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="h-8 w-8 text-blue-600" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building2 className="h-8 w-8 text-green-600" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">Quality Results</h4>
               <p className="text-gray-600">Delivering excellence in every project</p>
