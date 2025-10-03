@@ -74,7 +74,7 @@ export function AboutSection() {
           </div>
           <div className="relative">
             <img
-              src="/modern-office-building-with-green-architecture-and.jpg"
+              src="/house-of-dream-idea-real-estate-illustration-ai-generative-free-photo.jpg"
               alt="Sevvel Shelters Office"
               className="rounded-lg shadow-xl w-full h-auto"
             />

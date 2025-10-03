@@ -11,7 +11,7 @@ export function ServicesSection() {
       title: "Liaison Services",
       description: "We provide government-approved liaison services for businesses, ensuring smooth operations through our guidance.",
       icon: Building2,
-      image: "/modern-office-building-with-green-architecture-and.jpg",
+      image: "/business-law.jpg",
       iconBg: "bg-green-100",
       iconColor: "text-green-800"
     },
@@ -20,7 +20,7 @@ export function ServicesSection() {
       title: "Real Estate Services", 
       description: "As a leading real estate market, our dedicated team provides tailored solutions for buying, selling, and investing in prime properties.",
       icon: Handshake,
-      image: "/luxury-residential-tower.jpg",
+      image: "/featured-main.jpg",
       iconBg: "bg-green-100",
       iconColor: "text-green-800"
     },
@@ -29,7 +29,7 @@ export function ServicesSection() {
       title: "Legal Services",
       description: "We offer expert counsel and comprehensive services tailored to meet diverse legal requirements with precision and reliability.",
       icon: Scale,
-      image: "/modern-apartment-complex-with-green-landscaping.jpg",
+      image: "/other-services-min-1024x726.jpeg.jpg",
       iconBg: "bg-green-100", 
       iconColor: "text-green-800"
     }
