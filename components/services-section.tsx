@@ -11,7 +11,7 @@ export function ServicesSection() {
       title: "Liaison Services",
       description: "We provide government-approved liaison services for businesses, ensuring smooth operations through our guidance.",
       icon: Building2,
-      image: "/business-law.jpg",
+      image: "business-law.jpg",
       iconBg: "bg-green-100",
       iconColor: "text-green-800"
     },
@@ -49,8 +49,8 @@ export function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <Link key={service.id} href={`/services?service=${service.id}`}>
-              <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 group border-0 cursor-pointer">
-                <CardContent className="p-0">
+              <Card className="bg-white shadow-lg hover:shadow-xl transition-all p-0 duration-300 group border-0 cursor-pointer">
+                <CardContent className="p-0 ">
                   {/* Service Image */}
                   <div className="relative h-48 overflow-hidden rounded-t-lg bg-gradient-to-br from-green-800 to-purple-500">
                     <img 

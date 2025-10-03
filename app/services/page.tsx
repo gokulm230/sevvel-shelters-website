@@ -20,7 +20,7 @@ function ServicesPageContent() {
       description: "Welcome to Sevvel Shelters, your trusted partner for liaison services strictly adhering to government norms. Our expertise lies in providing comprehensive liaison services to ensure seamless compliance with regulatory requirements for your projects. From DTCP/LPA approval to land conversion, IIACA approval, corporation compliance, airport compliance, fire compliance, approval feasibility reports, RERA compliance, and technical due diligence, we offer different liaison services to meet your needs.",
       secondDescription: "Our team is proficient in navigating government regulations, offering efficient and reliable liaison services tailored to your needs. We prioritize client satisfaction and strive to ensure smooth approval processes for your projects, ensuring a smoother regulatory landscape.",
       thirdDescription: "At Sevvel Shelters, we prioritize client satisfaction and strive to exceed your expectations. Contact us today to learn more about how we can assist you in achieving your project goals while ensuring full compliance with government norms. Let us be your partners in success.",
-      image: "/services/liaison-detailed.jpg",
+      image: "/business-law.jpg",
       features: [
         "DTCP / LPA Approval - We facilitate the approval process for your development projects with the Department of Town and Country Planning (DTCP) or the Local Planning Authority (LPA)",
         "Land Conversion - Our team assists in obtaining the necessary approvals for converting land from agricultural to non-agricultural use, ensuring compliance with land use regulations",
@@ -40,7 +40,7 @@ function ServicesPageContent() {
       description: "Welcome to Sevvel Shelters, your trusted partner for all your real estate needs. We specialize in various services, including land aggregation, property buying, property selling, and joint ventures.",
       secondDescription: "Whether you're looking to invest in land for development, buy or sell a property, or explore joint ventures opportunities, our experienced team guides you through every step.",
       thirdDescription: "Sevvel Shelters prioritizes client satisfaction and strives to provide exceptional results that are tailored to your specific needs. Trust Sevvel Shelters to handle your real estate transactions in a professional, honest, and efficient manner. Contact us today to learn more about how we will help you in achieving your real estate goals. Let Sevvel Shelters be your partner in building your real estate portfolio and realizing your investment dreams.",
-      image: "/services/real-estate-detailed.jpg",
+      image: "/featured-main.jpg",
       features: [
         "Land Aggregation - We offer expert services in land aggregation, specializing in efficient parcel aggregation for development projects, allowing land owners to unlock potential and streamline the development process",
         "Property Buying - Find your ideal property seamlessly with Sevvel Shelters' comprehensive buying services. Get benefits from our expert guidance and support throughout the entire purchasing journey",
@@ -55,7 +55,7 @@ function ServicesPageContent() {
       description: "At Sevvel Shelters, we specialize in providing comprehensive legal services to clients in the real estate sector, ensuring legal compliance and the protection of their assets. With a team of seasoned legal professionals and top-notch advocates, we offer a wide range of services tailored to meet the diverse needs of our clients.",
       secondDescription: "Sevvel Shelters is a legal firm with a team of skilled professionals who provide customized solutions to meet the unique needs of each client. We are committed to excellence, upholding professionalism, integrity, and ethics. Our client-centric approach ensures satisfaction, and we have a proven track record of successful outcomes.",
       thirdDescription: "Our goal is to empower clients to navigate the legal landscape with confidence and peace of mind, offering reliable, efficient, and effective legal solutions.",
-      image: "/services/legal-detailed.jpg",
+      image: "/other-services-min-1024x726.jpeg.jpg",
       features: [
         "Due Diligence and Pre-Verifications - Our services guarantee the solid foundation of your real estate ventures through meticulous due diligence, pre-verification, risk identification, and legal compliance",
         "Asset Audits – Registrations - Our services include asset audits and registration, ensuring legal compliance and proper documentation, thereby safeguarding your assets for future growth and stability",
@@ -127,9 +127,13 @@ function ServicesPageContent() {
             {/* Service Image */}
             <div className="mb-8">
               <img 
-                src="/modern-office-building-with-green-architecture-and.jpg"
+                src={currentService.image}
                 alt={currentService.title}
                 className="w-full h-64 object-cover rounded-lg"
+                onError={(e) => {
+                  // Fallback image if the original doesn't load
+                  e.currentTarget.src = "/modern-office-building-with-green-architecture-and.jpg"
+                }}
               />
             </div>
 
