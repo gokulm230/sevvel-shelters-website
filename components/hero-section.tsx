@@ -7,12 +7,13 @@ export function HeroSection() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute top-16 inset-0 z-0">
-        <Image
-          src="/set-designer-work-indoors.jpg"
-          alt="Sevvel Shelters Background"
-          layout="fill"
-          objectFit="cover"
-        />
+ 
+      <Image
+        src="/set-designer-work-indoors.jpg"
+        alt="Set designer work indoors"
+        fill
+        className="object-cover"
+      />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 

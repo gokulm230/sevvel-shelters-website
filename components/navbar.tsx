@@ -19,22 +19,26 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-lg border-b border-white/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-3">
               <Image
-                src="/Sevvel_logo.png"
+                src="/Sevvel SheltersLOGO.png"
                 alt="Sevvel Shelters Logo"
-                width={40}
-                height={40}
-                className="h-10"
+                width={60}
+                height={60}
+                className="h-15 w-auto"
               />
-              <span className="font-bold text-xl text-foreground">
-                Sevvel Shelters
-              </span>
+              <Image
+                src="/Sevvel Shelters Final 02-01.png"
+                alt="Sevvel Shelters"
+                width={300}
+                height={75}
+                className="h-60 w-auto object-contain"
+              />
             </Link>
           </div>
 
