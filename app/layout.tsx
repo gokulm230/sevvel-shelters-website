@@ -1,11 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Nunito } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { LayoutWrapper } from "@/components/layout-wrapper"
 import "./globals.css"
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-nunito",
+})
 
 // Add SMTP.js for email functionality
 import Script from 'next/script'
@@ -29,7 +34,7 @@ export default function RootLayout({
       <head>
         <Script src="https://smtpjs.com/v3/smtp.js" strategy="beforeInteractive" />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`${nunito.variable} font-sans antialiased`}>
         <LayoutWrapper>
           <Suspense fallback={null}>{children}</Suspense>
         </LayoutWrapper>
