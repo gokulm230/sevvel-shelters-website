@@ -9,7 +9,7 @@ export function HeroSection() {
       <div className="absolute top-16 inset-0 z-0">
  
       <Image
-        src="/set-designer-work-indoors.jpg"
+        src="/indoor-plants-studio.jpg"
         alt="Set designer work indoors"
         fill
         className="object-cover"

@@ -1,15 +1,15 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Nunito } from "next/font/google"
+import { Poppins } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { LayoutWrapper } from "@/components/layout-wrapper"
 import "./globals.css"
 
-const nunito = Nunito({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-nunito",
+  variable: "--font-poppins",
 })
 
 // Add SMTP.js for email functionality
@@ -34,7 +34,7 @@ export default function RootLayout({
       <head>
         <Script src="https://smtpjs.com/v3/smtp.js" strategy="beforeInteractive" />
       </head>
-      <body className={`${nunito.variable} font-sans antialiased`}>
+      <body className={`${poppins.variable} font-sans antialiased`}>
         <LayoutWrapper>
           <Suspense fallback={null}>{children}</Suspense>
         </LayoutWrapper>
