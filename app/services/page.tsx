@@ -86,7 +86,7 @@ function ServicesPageContent() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-800 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-800 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading services...</p>
         </div>
       </div>
@@ -108,7 +108,7 @@ function ServicesPageContent() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-green-800 text-white py-16">
+      <div className="bg-gray-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center text-white hover:text-green-200 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -154,7 +154,7 @@ function ServicesPageContent() {
 
             {/* Service Features */}
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">
                 What We Provide In {currentService.id === 'liaison' ? 'Liaison Services' : 
                                    currentService.id === 'realEstate' ? 'Real Estate Services' : 
                                    'Legal Services'}
@@ -166,11 +166,11 @@ function ServicesPageContent() {
                     <Card key={index} className="p-6 hover:shadow-lg transition-shadow duration-300">
                       <CardContent className="p-0">
                         <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                            <div className="w-6 h-6 bg-green-800 rounded"></div>
+                          <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                            <div className="w-6 h-6 bg-gray-800 rounded"></div>
                           </div>
                           <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-green-800 mb-2">{title}</h4>
+                            <h4 className="text-lg font-semibold text-gray-800 mb-2">{title}</h4>
                             <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
                           </div>
                         </div>
@@ -183,10 +183,10 @@ function ServicesPageContent() {
 
             {/* Contact CTA */}
             <div className="bg-green-50 p-6 rounded-lg">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Need Help? Call Us Now</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Need Help? Call Us Now</h3>
               <div className="flex items-center">
-                <Phone className="h-5 w-5 text-green-800 mr-2" />
-                <span className="text-lg font-semibold text-green-800">+91 9489533001</span>
+                <Phone className="h-5 w-5 text-gray-800 mr-2" />
+                <span className="text-lg font-semibold text-gray-800">+91 9489533001</span>
               </div>
             </div>
           </div>
@@ -195,7 +195,7 @@ function ServicesPageContent() {
           <div className="lg:col-span-1">
             <Card className="sticky top-8">
               <CardContent className="p-0">
-                <div className="bg-green-800 text-white p-4 rounded-t-lg">
+                <div className="bg-gray-800 text-white p-4 rounded-t-lg">
                   <h3 className="text-lg font-semibold">Our Services</h3>
                 </div>
                 
@@ -206,7 +206,7 @@ function ServicesPageContent() {
                       onClick={() => setActiveService(service.id)}
                       className={`w-full text-left p-3 rounded-lg transition-colors ${
                         activeService === service.id
-                          ? 'bg-green-800 text-white'
+                          ? 'bg-gray-800 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
                     >
@@ -227,12 +227,12 @@ function ServicesPageContent() {
             {/* Contact Card */}
             <Card className="mt-6">
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Phone className="h-8 w-8 text-green-800" />
+                <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Phone className="h-8 w-8 text-gray-800" />
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Get Expert Consultation</h4>
+                <h4 className="text-lg font-semibold text-gray-800 mb-2">Get Expert Consultation</h4>
                 <p className="text-gray-600 mb-4">Contact our experts for personalized service solutions</p>
-                <Button className="w-full bg-green-800 hover:bg-green-700">
+                <Button className="w-full bg-gray-800 hover:bg-gray-800">
                   Contact Now
                 </Button>
               </CardContent>
@@ -249,7 +249,7 @@ export default function ServicesPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-800 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-800 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading services...</p>
         </div>
       </div>
