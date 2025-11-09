@@ -234,14 +234,14 @@ export function ProjectDetailsModal({ project, isOpen, onClose }: ProjectDetails
             </div>
 
             {/* Action buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            {/* <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button className="flex-1 bg-primary hover:bg-primary/90">
                 Contact Us
               </Button>
               <Button variant="outline" className="flex-1">
                 Download Brochure
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
