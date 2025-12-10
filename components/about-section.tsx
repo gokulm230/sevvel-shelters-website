@@ -9,7 +9,7 @@ export function AboutSection() {
   const achievements = [
     {
       icon: Building,
-      title: "50+ Projects",
+      title: "25+ Projects",
       description: "Successfully completed residential and commercial projects",
     },
     {

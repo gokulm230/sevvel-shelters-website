@@ -88,30 +88,7 @@ export function Careers() {
       ],
       postedDate: "2023-09-01",
     },
-    {
-      id: "job2",
-      title: "Interior Designer",
-      location: "Coimbatore, Tamil Nadu",
-      type: "Full-time",
-      category: "design",
-      description:
-        "Sevvel Shelters is seeking a creative Interior Designer to create functional and aesthetically pleasing spaces for our residential and commercial projects.",
-      responsibilities: [
-        "Create innovative design concepts for client approval",
-        "Select appropriate colors, materials, and finishes",
-        "Prepare detailed design plans using CAD software",
-        "Coordinate with contractors and vendors",
-        "Ensure designs meet client requirements and budget constraints",
-      ],
-      requirements: [
-        "Bachelor's degree in Interior Design or related field",
-        "2+ years of professional design experience",
-        "Proficiency in design software (AutoCAD, SketchUp, Adobe Creative Suite)",
-        "Strong portfolio demonstrating design skills",
-        "Knowledge of building codes and regulations",
-      ],
-      postedDate: "2023-09-15",
-    },
+    
     {
       id: "job3",
       title: "Project Manager",
