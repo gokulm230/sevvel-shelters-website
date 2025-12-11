@@ -85,7 +85,7 @@ export function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
                 <p className="text-muted-foreground text-sm">
-                  Shop No 1, Mohanatamil Adukkagam, LN Nagar, Kalapatti, Coimbatore - 641048
+                  Shop No 2, Mohanatamil Adukkagam, LN Nagar, Kalapatti, Coimbatore - 641048
                 </p>
               </div>
               <div className="flex items-center space-x-3">
