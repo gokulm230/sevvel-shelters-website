@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 
 export function WhatsAppButton() {
-  const phoneNumber = "+919489533001"
+  const phoneNumber = "+919047976669"
   const message = "Hello! I'm interested in your real estate projects. Could you please provide more information?"
 
   const handleWhatsAppClick = () => {

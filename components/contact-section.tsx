@@ -73,8 +73,8 @@ Looking forward to hearing from you.
 Thank you.
     `.trim();
 
-    // Create WhatsApp URL with the phone number 6383755749
-    const whatsappLink = `https://wa.me/916383755749?text=${encodeURIComponent(whatsappMessage)}`;
+    // Create WhatsApp URL with the phone number 9047976669
+    const whatsappLink = `https://wa.me/919047976669?text=${encodeURIComponent(whatsappMessage)}`;
 
     // Open WhatsApp in a new tab
     window.open(whatsappLink, '_blank');
@@ -161,7 +161,7 @@ Thank you.
                 
                 <p>Best regards,<br>
                 Sevvel Shelters Team<br>
-                Phone: +91 6383755749<br>
+                Phone: +91 9047976669<br>
                 Email: sevvelshelters@gmail.com</p>
               </div>
               <div class="footer">
@@ -280,9 +280,9 @@ Thank you.
                     <h4 className="font-semibold text-foreground mb-1">
                       Phone
                     </h4>
-                    <p className="text-muted-foreground">+91 9489533001</p>
+                    <p className="text-muted-foreground">+91 9047976669</p>
                     <a 
-                      href="https://wa.me/919489533001" 
+                      href="https://wa.me/919047976669" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="inline-flex items-center text-primary hover:underline mt-1"

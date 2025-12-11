@@ -265,8 +265,8 @@ Looking forward to hearing from you.
 Thank you.
     `.trim();
 
-    // Create WhatsApp URL with the phone number 6383755749
-    const whatsappLink = `https://wa.me/916383755749?text=${encodeURIComponent(whatsappMessage)}`;
+    // Create WhatsApp URL with the phone number 9047976669
+    const whatsappLink = `https://wa.me/919047976669?text=${encodeURIComponent(whatsappMessage)}`;
 
     // Open WhatsApp in a new tab
     window.open(whatsappLink, '_blank');
@@ -362,7 +362,7 @@ Thank you.
                 
                 <p>Best regards,<br>
                 Sevvel Shelters HR Team<br>
-                Phone: +91 6383755749<br>
+                Phone: +91 9047976669<br>
                 Email: careers@sevvelshelters.com</p>
               </div>
               <div class="footer">
@@ -934,7 +934,7 @@ Thank you.
             
             <Button asChild className="bg-[#25D366] hover:bg-[#20BD5C] text-white">
               <a
-                href="https://wa.me/916383755749?text=Hello%20Sevvel%20Shelters%20Team%2C%0A%0AI'm%20interested%20in%20career%20opportunities%20with%20your%20company.%0A%0AThank%20you."
+                href="https://wa.me/919047976669?text=Hello%20Sevvel%20Shelters%20Team%2C%0A%0AI'm%20interested%20in%20career%20opportunities%20with%20your%20company.%0A%0AThank%20you."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center"
@@ -947,7 +947,7 @@ Thank you.
             
             <Button asChild variant="secondary">
               <a
-                href="tel:+919489533001"
+                href="tel:+919047976669"
                 className="inline-flex items-center"
               >
                 <Phone className="mr-2 h-4 w-4" /> Call Us
