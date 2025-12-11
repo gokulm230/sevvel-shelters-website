@@ -1,5 +1,5 @@
--- Create projects table
-create table public.projects (
+-- Create projects table if it doesn't exist
+create table if not exists public.projects (
   id uuid default gen_random_uuid() primary key,
   title text not null,
   description text not null,
@@ -16,7 +16,13 @@ create table public.projects (
 -- Set up row level security
 alter table public.projects enable row level security;
 
--- Create policies
+-- Drop existing policies to avoid conflicts
+drop policy if exists "Anyone can view visible projects" on public.projects;
+drop policy if exists "Authenticated users can insert projects" on public.projects;
+drop policy if exists "Authenticated users can update projects" on public.projects;
+drop policy if exists "Authenticated users can delete projects" on public.projects;
+
+-- Create policies (fresh)
 -- Allow anyone to read visible projects
 create policy "Anyone can view visible projects"
   on public.projects for select
@@ -35,11 +41,18 @@ create policy "Authenticated users can delete projects"
   on public.projects for delete
   using (auth.role() = 'authenticated');
   
--- Create storage bucket for project images
+-- Create storage bucket for project images if it doesn't exist
 insert into storage.buckets (id, name, public)
-values ('project-images', 'project-images', true);
+values ('project-images', 'project-images', true)
+on conflict (id) do nothing;
 
--- Set up storage policies
+-- Drop existing storage policies to avoid conflicts
+drop policy if exists "Public can view project images" on storage.objects;
+drop policy if exists "Authenticated users can upload project images" on storage.objects;
+drop policy if exists "Authenticated users can update project images" on storage.objects;
+drop policy if exists "Authenticated users can delete project images" on storage.objects;
+
+-- Set up storage policies (fresh)
 create policy "Public can view project images"
   on storage.objects for select
   using (bucket_id = 'project-images');

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
+import { Facebook, Youtube, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 
 export function Footer() {
   return (
@@ -19,11 +19,11 @@ export function Footer() {
               solutions in Coimbatore.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link href="https://www.facebook.com/share/1B3qUXEbU8/" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
+              <Link href="https://youtube.com/@sevvelshelters?si=-gnADryjXAjW7XX6" className="text-muted-foreground hover:text-primary transition-colors">
+                <Youtube className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />

@@ -218,7 +218,7 @@ Thank you.
         `.trim();
 
         // Create mailto URL as fallback
-        const mailtoLink = `mailto:info@sevvelshelters.com?subject=${encodeURIComponent(
+        const mailtoLink = `mailto:sevvelshelters@gmail.com?subject=${encodeURIComponent(
           formData.subject || "Inquiry from Website"
         )}&body=${encodeURIComponent(emailBody)}`;
 
@@ -307,7 +307,7 @@ Thank you.
                       href="mailto:info@sevvelshelters.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      info@sevvelshelters.com
+                      sevvelshelters@gmail.com
                     </a>
                   </div>
                 </div>
