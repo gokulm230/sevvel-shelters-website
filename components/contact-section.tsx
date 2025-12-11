@@ -102,7 +102,7 @@ Thank you.
       
       // Send the email to Sevvel Shelters
       const successToCompany = await sendEmail({
-        to: "info@sevvelshelters.com",
+        to: "sevvelshelters@gmail.com",
         subject: formData.subject || "Inquiry from Website",
         body: emailHTML,
         from: formData.email, 
@@ -162,7 +162,7 @@ Thank you.
                 <p>Best regards,<br>
                 Sevvel Shelters Team<br>
                 Phone: +91 6383755749<br>
-                Email: info@sevvelshelters.com</p>
+                Email: sevvelshelters@gmail.com</p>
               </div>
               <div class="footer">
                 <p>This is an automated confirmation message. Please do not reply to this email.</p>
@@ -176,7 +176,7 @@ Thank you.
         to: formData.email,
         subject: "Thank You for Contacting Sevvel Shelters",
         body: confirmationHTML,
-        from: "info@sevvelshelters.com",
+        from: "sevvelshelters@gmail.com",
         name: "Sevvel Shelters"
       });
       
@@ -304,7 +304,7 @@ Thank you.
                       Email
                     </h4>
                     <a
-                      href="mailto:info@sevvelshelters.com"
+                      href="mailto:sevvelshelters@gmail.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       sevvelshelters@gmail.com
