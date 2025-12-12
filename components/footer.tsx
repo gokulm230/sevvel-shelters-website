@@ -25,7 +25,7 @@ export function Footer() {
               <Link href="https://youtube.com/@sevvelshelters?si=-gnADryjXAjW7XX6" className="text-muted-foreground hover:text-primary transition-colors">
                 <Youtube className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link href="https://www.instagram.com/sevvelshelters?igsh=enpqZndyMnh2bmRz" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
